@@ -5,6 +5,8 @@ import DishDetail from "./DishdetailComponent";
 import { DISHES } from "../shared/dishes";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
+import Home from "./HomeComponent";
+import { Switch, Route, Redirect, Routes, Navigate } from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
@@ -20,14 +22,33 @@ class Main extends Component {
   }
 
   render() {
+
+    const HomePage = () => {
+      return(
+          <Home 
+          />
+      );
+    }
+
+
+  
     return (
       <div>
         <Header />
-
-        <Menu
-          dishes={this.state.dishes}
-          onClick={(dishId) => this.onDishSelect(dishId)}
-        />
+        <Routes>
+          <Route path="/home" Component={HomePage} />
+          <Route
+            exact
+            path="/menu"
+            element={
+              <Menu
+                dishes={this.state.dishes}
+                onClick={(dishId) => this.onDishSelect(dishId)}
+              />
+            }
+          />
+          <Route path="/home" element={<Navigate to="/Menu" />} />
+        </Routes>
         <DishDetail
           dish={
             this.state.dishes.filter(
@@ -35,7 +56,6 @@ class Main extends Component {
             )[0]
           }
         />
-
         <Footer />
       </div>
     );

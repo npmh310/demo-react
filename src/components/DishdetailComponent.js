@@ -49,6 +49,7 @@ function RenderComments({ comments }) {
     <div className="col-12 col-md-3">
       <h4> Comments </h4>
       <ul className="list-unstyled">{showcmnts}</ul>
+      
     </div>
   );
 }
