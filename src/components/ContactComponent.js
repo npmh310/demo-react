@@ -22,10 +22,53 @@ class Contact extends Component {
       agree: false,
       contactType: "Tel.",
       message: "",
+      touched: {
+        firstname: false,
+        lastname: false,
+        telnum: false,
+        email: false,
+      },
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  handleBlur = (field) => (evt) => {
+    this.setState({
+      touched: { ...this.state.touched, [field]: true },
+    });
+  };
+
+  validate(firstname, lastname, telnum, email) {
+    const errors = {
+      firstname: "",
+      lastname: "",
+      telnum: "",
+      email: "",
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    if (this.state.touched.firstname && firstname.length < 3)
+      errors.firstname = "First Name should be >= 3 characters";
+    else if (this.state.touched.firstname && firstname.length > 10)
+      errors.firstname = "First Name should be <= 10 characters";
+
+    if (this.state.touched.lastname && lastname.length < 3)
+      errors.lastname = "Last Name should be >= 3 characters";
+    else if (this.state.touched.lastname && lastname.length > 10)
+      errors.lastname = "Last Name should be <= 10 characters";
+
+    const reg = /^\d+$/;
+    if (this.state.touched.telnum && !reg.test(telnum))
+      errors.telnum = "Tel. Number should contain only numbers";
+
+    if (
+      this.state.touched.email &&
+      email.split("").filter((x) => x === "@").length !== 1
+    )
+      errors.email = "Email should contain a @";
+
+    return errors;
   }
 
   handleInputChange(event) {
@@ -122,7 +165,9 @@ class Contact extends Component {
                       id="firstname"
                       name="firstname"
                       placeholder="First Name"
-                      value={this.state.firstname}
+                      valid={errors.firstname === ""}
+                      invalid={errors.firstname !== ""}
+                      onBlur={this.handleBlur("firstname")}
                       onChange={this.handleInputChange}
                     />
                   </Col>
@@ -138,6 +183,9 @@ class Contact extends Component {
                       name="lastname"
                       placeholder="Last Name"
                       value={this.state.lastname}
+                      valid={errors.lastname === ""}
+                      invalid={errors.lastname !== ""}
+                      onBlur={this.handleBlur("lastname")}
                       onChange={this.handleInputChange}
                     />
                   </Col>
@@ -153,6 +201,9 @@ class Contact extends Component {
                       name="telnum"
                       placeholder="Tel. number"
                       value={this.state.telnum}
+                      valid={errors.telnum === ""}
+                      invalid={errors.telnum !== ""}
+                      onBlur={this.handleBlur("telnum")}
                       onChange={this.handleInputChange}
                     />
                   </Col>
@@ -191,6 +242,9 @@ class Contact extends Component {
                       type="select"
                       name="contactType"
                       value={this.state.contactType}
+                      valid={errors.email === ""}
+                      invalid={errors.email !== ""}
+                      onBlur={this.handleBlur("email")}
                       onChange={this.handleInputChange}
                     >
                       <option>Tel.</option>
