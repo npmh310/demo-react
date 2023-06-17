@@ -7,10 +7,11 @@ import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
 import { Switch, Route, Redirect, Routes, Navigate, useParams } from "react-router-dom";
-import Contact from './ContactComponent';
+import Contact from './ContactComponentV2';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import Login from "./Login";
 
 class Main extends Component {
   constructor(props) {
@@ -70,6 +71,7 @@ class Main extends Component {
             }
           />
           <Route path="/home" element={<Navigate to="/Menu" />} />
+          <Route exact path='/login' Component={Login}/>
           <Route exact path='/contactus' Component={Contact}/>
           <Route path='/menu/:dishId' Component={DishWithId} />
         </Routes>
