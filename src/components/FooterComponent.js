@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 function Footer(props) {
   return (
     <div className="footer">
@@ -20,6 +21,19 @@ function Footer(props) {
               <li>
                 <Link to="/contactus">Contact Us</Link>
               </li>
+
+              {/* <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">About</a>
+              </li>
+              <li>
+                <a href="#">Menu</a>
+              </li>
+              <li>
+                <a href="contactus.html">Contact</a>
+              </li> */}
             </ul>
           </div>
           <div className="col-7 col-sm-5">
@@ -79,7 +93,7 @@ function Footer(props) {
         </div>
         <div className="row justify-content-center">
           <div className="col-auto">
-            <p>© Copyright 2023 Ristorante Con Fusion</p>
+            <p>© Copyright 2018 Ristorante Con Fusion</p>
           </div>
         </div>
       </div>

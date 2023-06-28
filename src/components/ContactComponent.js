@@ -8,8 +8,11 @@ import {
   Label,
   Input,
   Col,
+  Row,
+  FormFeedback,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
 class Contact extends Component {
   constructor(props) {
     super(props);
@@ -29,9 +32,26 @@ class Contact extends Component {
         email: false,
       },
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleSubmit(event) {
+    console.log("Current State is: " + JSON.stringify(this.state));
+    alert("Current State is: " + JSON.stringify(this.state));
+    event.preventDefault();
   }
 
   handleBlur = (field) => (evt) => {
@@ -39,7 +59,6 @@ class Contact extends Component {
       touched: { ...this.state.touched, [field]: true },
     });
   };
-
   validate(firstname, lastname, telnum, email) {
     const errors = {
       firstname: "",
@@ -47,7 +66,6 @@ class Contact extends Component {
       telnum: "",
       email: "",
     };
-
     if (this.state.touched.firstname && firstname.length < 3)
       errors.firstname = "First Name should be >= 3 characters";
     else if (this.state.touched.firstname && firstname.length > 10)
@@ -71,38 +89,15 @@ class Contact extends Component {
     return errors;
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value,
-    });
-  }
-
-  handleSubmit(event) {
-    console.log("Current State is: " + JSON.stringify(this.state));
-    alert("Current State is: " + JSON.stringify(this.state));
-    event.preventDefault();
-  }
-
   render() {
+    const errors = this.validate(
+      this.state.firstname,
+      this.state.lastname,
+      this.state.telnum,
+      this.state.email
+    );
     return (
       <div className="container">
-        <div className="row">
-          <Breadcrumb>
-            <BreadcrumbItem>
-              <Link to="/home">Home</Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem active>Contact Us</BreadcrumbItem>
-          </Breadcrumb>
-          <div className="col-12">
-            <h3>Contact Us</h3>
-            <hr />
-          </div>
-        </div>
-
         <div className="row row-content">
           <div className="col-12">
             <h3>Location Information</h3>
@@ -148,7 +143,6 @@ class Contact extends Component {
               </a>
             </div>
           </div>
-
           <div className="row row-content">
             <div className="col-12">
               <h3>Send us your Feedback</h3>
@@ -165,11 +159,13 @@ class Contact extends Component {
                       id="firstname"
                       name="firstname"
                       placeholder="First Name"
-                    //   valid={errors.firstname === ""}
-                    //   invalid={errors.firstname !== ""}
+                      value={this.state.firstname}
+                      valid={errors.firstname === ""}
+                      invalid={errors.firstname !== ""}
                       onBlur={this.handleBlur("firstname")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.firstname}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -183,11 +179,12 @@ class Contact extends Component {
                       name="lastname"
                       placeholder="Last Name"
                       value={this.state.lastname}
-                    //   valid={errors.lastname === ""}
-                    //   invalid={errors.lastname !== ""}
+                      valid={errors.lastname === ""}
+                      invalid={errors.lastname !== ""}
                       onBlur={this.handleBlur("lastname")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.lastname}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -199,13 +196,14 @@ class Contact extends Component {
                       type="tel"
                       id="telnum"
                       name="telnum"
-                      placeholder="Tel. number"
+                      placeholder="Tel. Number"
                       value={this.state.telnum}
-                    //   valid={errors.telnum === ""}
-                    //   invalid={errors.telnum !== ""}
+                      valid={errors.telnum === ""}
+                      invalid={errors.telnum !== ""}
                       onBlur={this.handleBlur("telnum")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.telnum}</FormFeedback>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -219,10 +217,15 @@ class Contact extends Component {
                       name="email"
                       placeholder="Email"
                       value={this.state.email}
+                      valid={errors.email === ""}
+                      invalid={errors.email !== ""}
+                      onBlur={this.handleBlur("email")}
                       onChange={this.handleInputChange}
                     />
+                    <FormFeedback>{errors.email}</FormFeedback>
                   </Col>
                 </FormGroup>
+
                 <FormGroup row>
                   <Col md={{ size: 6, offset: 2 }}>
                     <FormGroup check>
@@ -242,9 +245,6 @@ class Contact extends Component {
                       type="select"
                       name="contactType"
                       value={this.state.contactType}
-                    //   valid={errors.email === ""}
-                    //   invalid={errors.email !== ""}
-                      onBlur={this.handleBlur("email")}
                       onChange={this.handleInputChange}
                     >
                       <option>Tel.</option>
@@ -277,9 +277,11 @@ class Contact extends Component {
               </Form>
             </div>
           </div>
+          ;
         </div>
       </div>
     );
   }
 }
+
 export default Contact;

@@ -6,60 +6,66 @@ import { DISHES } from "../shared/dishes";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
-import { Switch, Route, Redirect, Routes, Navigate, useParams } from "react-router-dom";
+import { Route, Redirect, Routes, Navigate, useParams } from "react-router-dom";
 import Contact from './ContactComponentV2';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 import Login from "./Login";
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { Provider } from "react-redux";
+import store from "../shared/store";
+import Counter from "../shared/Counter"
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dishes: DISHES,
-      // selectedDish: null,
       comments: COMMENTS,
       promotions: PROMOTIONS,
-      leaders: LEADERS
-
+      leaders: LEADERS,
     };
   }
 
-  onDishSelect(dishId) {
-    this.setState({ selectedDish: dishId });
-  }
+  // onDishSelect(dishId) {
+  //   this.setState({ selectedDish: dishId });
+  // }
 
   render() {
-
     const HomePage = () => {
-      return(
-          <Home 
-              dish={this.state.dishes.filter((dish) => dish.featured)[0]}
-              promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
-              leader={this.state.leaders.filter((leader) => leader.featured)[0]}
-          />
-      );
-    }
-
-    // khoong ther chay 
-    
-    const DishWithId = () => {
-      const {dishId } = useParams();
-      return(
-          <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
-            comments={this.state.comments.filter((comment) => comment.dishId === parseInt(dishId,10))} />
+      return (
+        <Home
+          dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+          promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+          leader={this.state.leaders.filter((leader) => leader.featured)[1]}
+        />
       );
     };
 
+    const DishWithId = () => {
+      const { dishId } = useParams();
+      return (
+        <DishDetail
+          dish={
+            this.state.dishes.filter(
+              (dish) => dish.id === parseInt(dishId, 10)
+            )[0]
+          }
+          comments={this.state.comments.filter(
+            (comment) => comment.dishId === parseInt(dishId, 10)
+          )}
+        />
+      );
+    };
 
-
-  
     return (
       <div>
         <Header />
         <Routes>
-          <Route path="/home" Component={HomePage} />
+          <Route path="/home" element={<HomePage />} />
+          {/* <Route path="/home" Component={HomePage} /> */}
           <Route
             exact
             path="/menu"
@@ -70,22 +76,17 @@ class Main extends Component {
               />
             }
           />
-          <Route path="/home" element={<Navigate to="/Menu" />} />
-          <Route exact path='/login' Component={Login}/>
-          <Route exact path='/contactus' Component={Contact}/>
-          <Route path='/menu/:dishId' Component={DishWithId} />
+          <Route exact path="/contactus" element={<Contact />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route path="/menu/:dishId" element={<DishWithId />} />
+          {/* <Route path="/menu/:dishId" Component={DishWithId} /> */}
         </Routes>
-        <DishDetail
-          dish={
-            this.state.dishes.filter(
-              (dish) => dish.id === this.state.selectedDish
-            )[0]
-          }
-        />
         <Footer />
       </div>
     );
   }
 }
+
+
 
 export default Main;

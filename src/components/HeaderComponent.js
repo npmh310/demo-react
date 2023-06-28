@@ -1,19 +1,21 @@
 import React, { Component } from "react";
-
 import {
-  Nav,
   Navbar,
   NavbarBrand,
-  NavbarTogg1er,
+  Nav,
   NavbarToggler,
   Collapse,
   NavItem,
+  Button,
   Modal,
   ModalHeader,
   ModalBody,
-  Button,
-  Label, Form, FormGroup, Input
+  Form,
+  FormGroup,
+  Input,
+  Label,
 } from "reactstrap";
+
 import { NavLink } from "react-router-dom";
 
 class Header extends Component {
@@ -21,32 +23,36 @@ class Header extends Component {
     super(props);
 
     this.toggleNav = this.toggleNav.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.state = {
       isNavOpen: false,
       isModalOpen: false,
     };
-    this.toggleModal = this.toggleModal.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  handleLogin(event) {
+    this.toggleModal();
+    alert(
+      "Username: " +
+        this.username.value +
+        " Password: " +
+        this.password.value +
+        " Remember: " +
+        this.remember.checked
+    );
+    event.preventDefault();
+  }
+
+  toggleNav() {
+    this.setState({
+      isNavOpen: !this.state.isNavOpen,
+    });
   }
 
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen,
-    });
-  }
-
-  handleLogin(event) {
-    this.toggleModal();
-    alert("Username: " + this.username.value + " Password: " + this.password.value
-        + " Remember: " + this.remember.checked);
-    event.preventDefault();
-
-}
-
-
-  toggleNav() {
-    this.setState({
-      isNavOpen: !this.state.isNavOpen,
     });
   }
 
@@ -59,30 +65,30 @@ class Header extends Component {
             <NavbarBrand className="mr-auto" href="/">
               <img
                 src="assets/images/logo.png"
-                height="30"
-                width="41"
-                alt="Ristorante Con Fusion"
+                height="35"
+                width="50"
+                alt="Food && Restaurent"
               />
             </NavbarBrand>
             <Collapse isOpen={this.state.isNavOpen} navbar>
               <Nav navbar>
                 <NavItem>
-                  <NavLink className="nav-link" to="/home">
+                  <NavLink className="nav-link mr-2 ml-5" to="/home">
                     <span className="fa fa-home fa-lg"></span> Home
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/aboutus">
+                  <NavLink className="nav-link mr-2" to="/aboutus">
                     <span className="fa fa-info fa-lg"></span> About Us
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/menu">
+                  <NavLink className="nav-link mr-2" to="/menu">
                     <span className="fa fa-list fa-lg"></span> Menu
                   </NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink className="nav-link" to="/contactus">
+                  <NavLink className="nav-link mr-2" to="/contactus">
                     <span className="fa fa-address-card fa-lg"></span> Contact
                     Us
                   </NavLink>
@@ -101,40 +107,50 @@ class Header extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
           <ModalBody>
-          <Form onSubmit={this.handleLogin}>
-                            <FormGroup>
-                                <Label htmlFor="username">Username</Label>
-                                <Input type="text" id="username" name="username"
-                                    innerRef={(input) => this.username = input} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label htmlFor="password">Password</Label>
-                                <Input type="password" id="password" name="password"
-                                    innerRef={(input) => this.password = input}  />
-                            </FormGroup>
-                            <FormGroup check>
-                                <Label check>
-                                    <Input type="checkbox" name="remember"
-                                    innerRef={(input) => this.remember = input}  />
-                                    Remember me
-                                </Label>
-                            </FormGroup>
-                            <Button type="submit" value="submit" color="primary">Login</Button>
-                        </Form>
-
+            <Form onSubmit={this.handleLogin}>
+              <FormGroup>
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  type="text"
+                  id="username"
+                  name="username"
+                  innerRef={(input) => (this.username = input)}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  type="password"
+                  id="password"
+                  name="password"
+                  innerRef={(input) => (this.password = input)}
+                />
+              </FormGroup>
+              <FormGroup check>
+                <Label check>
+                  <Input
+                    type="checkbox"
+                    name="remember"
+                    innerRef={(input) => (this.remember = input)}
+                  />
+                  Remember me
+                </Label>
+              </FormGroup>
+              <Button type="submit" value="submit" color="primary">
+                Login
+              </Button>
+            </Form>
           </ModalBody>
         </Modal>
-        <div className="rounded">
-          <div className="container">
-            <div className="row row-header">
-              <div className="col-12 col-sm-6">
-                <h1>Ristorante con Fusion</h1>
-                <p>
-                  We take inspiration from the World's best cuisines, and create
-                  a unique fusion experience. Our lipsmacking creations will
-                  tickle your culinary senses!
-                </p>
-              </div>
+        <div className="container">
+          <div className="row row-header justify-content-center">
+            <div className="col-12 col-sm-6 p-4">
+              <h1>Nguyen Phuoc Minh Hieu</h1>
+              <p>
+                We take inspiration from the World's best cuisines, and create a
+                unique fusion experience. Our lipsmacking creations will tickle
+                your culinary senses!
+              </p>
             </div>
           </div>
         </div>
@@ -142,5 +158,6 @@ class Header extends Component {
     );
   }
 }
+
 
 export default Header;
