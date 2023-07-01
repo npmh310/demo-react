@@ -14,7 +14,7 @@ import { PROMOTIONS } from "../shared/promotions";
 import { LEADERS } from "../shared/leaders";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
 import { connect } from "react-redux";
-
+import { actions } from 'react-redux-form';
 const mapStateToProps = (state) => {
   return {
     dishes: state.dishes,
@@ -30,6 +30,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
 });
 
 class Main extends Component {
@@ -84,7 +85,7 @@ class Main extends Component {
         <Header />
         <Routes>
           <Route path="/home" element={<HomePage />} />
-          {/* <Route exact path="/aboutus" element={<About />} /> */}
+          <Route exact path='/contactus' Component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
           <Route
             exact
             path="/menu"
@@ -95,7 +96,7 @@ class Main extends Component {
               />
             }
           />
-          <Route exact path="/contactus" element={<Contact />} />
+          {/* <Route exact path="/contactus" element={<Contact />} /> */}
           <Route exact path="/login" element={<Login />} />
           <Route path="/menu/:dishId" element={<DishWithId />} />
         </Routes>
