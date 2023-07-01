@@ -9,6 +9,7 @@ import {
   BreadcrumbItem,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import CommentForm from "./CommentForm"; // import { Provider } from "react-redux";
 
 function RenderDish({ dish }) {
   if (dish == null) {
@@ -27,7 +28,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments == null) {
     return <div></div>;
   }
@@ -56,7 +57,6 @@ function RenderComments({ comments }) {
 }
 
 const DishDetail = (props) => {
-  // const dish = this.props.dish;
   if (props.dish != null)
     return (
       <div className="container">
@@ -77,7 +77,13 @@ const DishDetail = (props) => {
             <RenderDish dish={props.dish} />
           </div>
           <div className="col-12 col-md-5 m-1">
-            <RenderComments comments={props.comments} />
+            {/* <CommentForm dishId={dishId} addComment={addComment} /> */}
+            <RenderComments
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />
+            <CommentForm dishId={props.dishId} addComment={props.addComment} />
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 import store from "./shared/store";
-
+// import { Provider } from "react-redux";
 class App extends Component {
 
   render() {
