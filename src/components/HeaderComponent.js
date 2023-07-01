@@ -67,7 +67,7 @@ class Header extends Component {
                 src="assets/images/logo.png"
                 height="35"
                 width="50"
-                alt="Food && Restaurent"
+                alt="Logo"
               />
             </NavbarBrand>
             <Collapse isOpen={this.state.isNavOpen} navbar>

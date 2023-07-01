@@ -5,20 +5,20 @@ import Main from './components/MainComponent';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
-import store from "./shared/store";
+const store = ConfigureStore();
 // import { Provider } from "react-redux";
 class App extends Component {
 
   render() {
     return (
 
-          //  <Provider store={store}>
-          <BrowserRouter>
-          <div className="App">
-            <Main />
-          </div>
-        </BrowserRouter>
-      // </Provider>
+      <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Main />
+        </div>
+      </BrowserRouter>
+    </Provider>
 
 
     );
