@@ -22,7 +22,7 @@ import {
   fetchPromos,
 } from "../redux/ActionCreators";
 import { postComment } from '../redux/ActionCreators';
-
+import { TransitionGroup, CSSTransition } from "react-transition-group";  
 
 const mapStateToProps = (state) => {
   return {
@@ -129,6 +129,12 @@ class Main extends Component {
           <Route exact path="/login" element={<Login />} />
           <Route path="/menu/:dishId" element={<DishWithId />} />
         </Routes>
+        <TransitionGroup>
+            <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
+            
+            </CSSTransition>
+          </TransitionGroup>
+
         <Footer />
       </div>
     );
