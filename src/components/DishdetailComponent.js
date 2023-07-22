@@ -21,7 +21,8 @@ function RenderDish({ dish }) {
   }
   return (
     <div className="col-12 col-md-12">
-   <FadeTransform
+
+       <FadeTransform
         in
         transformProps={{
           exitTransform: "scale(0.5) translateY(-50%)",
@@ -46,25 +47,26 @@ function RenderComments({ comments, postComment, dishId }) {
   }
   const showcmnts = comments.map((cmnt) => {
     return (
-      <Stagger in>
-      {comments.map((comment) => {
-        return (
-          <Fade in>
-            <li key={comment.id}>
-              <p>{comment.comment}</p>
-              <p>
-                -- {comment.author} ,{" "}
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "2-digit",
-                }).format(new Date(Date.parse(comment.date)))}
-              </p>
-            </li>
-          </Fade>
-        );
-      })}
-    </Stagger>
+      
+           <Stagger in>
+        {comments.map((comment) => {
+          return (
+            <Fade in>
+              <li key={comment.id}>
+                <p>{comment.comment}</p>
+                <p>
+                  -- {comment.author} ,{" "}
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  }).format(new Date(Date.parse(comment.date)))}
+                </p>
+              </li>
+            </Fade>
+          );
+        })}
+      </Stagger>
     );
   });
 
